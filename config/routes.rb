@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
+  
+
   resources :establecimientos
+  post '/establecimientos/guardar_foto'
   get 'home/index'
 
   devise_for :users

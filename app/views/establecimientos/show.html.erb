@@ -1,9 +1,24 @@
 <p id="notice"><%= notice %></p>
-
+<h1>Establecimiento</h1>
 <p>
   <strong>Nombre:</strong>
   <%= @establecimiento.nombre %>
 </p>
+
+
+<h1>Fotos</h1>
+<%= form_for @foto, url: '/establecimientos/guardar_foto', html: { multipart: true} do |f| %>
+
+  <%= f.hidden_field :establecimiento_id %>
+  <%= f.file_field :foto%>
+  <%= f.submit %>
+
+<% end %>
+
+
+
+
+
 
 <%= link_to 'Edit', edit_establecimiento_path(@establecimiento) %> |
 <%= link_to 'Back', establecimientos_path %>

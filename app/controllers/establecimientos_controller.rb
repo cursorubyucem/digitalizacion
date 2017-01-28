@@ -10,6 +10,12 @@ class EstablecimientosController < ApplicationController
   # GET /establecimientos/1
   # GET /establecimientos/1.json
   def show
+    @foto = Foto.new
+    @foto.establecimiento_id = @establecimiento.id    
+  end
+
+  def guardar_foto
+    foto = Foto.create(params.require(:foto).permit(:establecimiento_id, :foto))
   end
 
   # GET /establecimientos/new
