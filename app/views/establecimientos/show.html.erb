@@ -27,6 +27,15 @@
 	<td><%= f.archivo_file_name %></td>
 	<td><%= f.archivo_content_type %></td>
 	<td><%= f.archivo_file_size %></td>
+
+<td>
+	<%= form_tag '/establecimientos/ver_documento',{method: :post, target: '_blank'} do %>
+	  <%= hidden_field_tag :id, f.id %>
+      <%= submit_tag 'Descargar' %>
+	<% end %>
+</td>
+
+
 	<td>
 		<%= form_tag '/establecimientos/borrar_documento', method: :delete do %>
 		  <%= hidden_field_tag :id, f.id %>

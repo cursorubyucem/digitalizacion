@@ -65,6 +65,12 @@ class EstablecimientosController < ApplicationController
     redirect_to @establecimiento
   end
 
+  def ver_documento
+    documento = Documento.find(params[:id])
+    file = File.new(documento.archivo.path)
+    send_file file, disposition: 'inline', type: 'application/pdf'
+  end
+
 
 
   # GET /establecimientos/new
