@@ -12,11 +12,60 @@ class EstablecimientosController < ApplicationController
   def show
     @foto = Foto.new
     @foto.establecimiento_id = @establecimiento.id    
+    @documento = Documento.new
+    @documento.establecimiento_id = @establecimiento.id
   end
 
   def guardar_foto
-    foto = Foto.create(params.require(:foto).permit(:establecimiento_id, :foto))
+    begin
+      @establecimiento = Establecimiento.find(params[:foto][:establecimiento_id])
+      foto = Foto.create!(params.require(:foto).permit(:establecimiento_id, :foto))
+      flash[:notice] = 'Foto creada correctamente'
+      
+    rescue Exception => e
+      flash[:alert] = 'Error al guardar: ' << e.message
+    ensure
+      redirect_to @establecimiento
+    end    
   end
+
+  def borrar_foto
+    foto = Foto.find(params[:id])
+    @establecimiento = foto.establecimiento
+    if foto.destroy
+      flash[:notice] = 'Eliminado correctamente'
+    else
+      flash[:alert] = 'Error al eliminar'
+    end
+    redirect_to @establecimiento
+  end
+
+
+  def guardar_documento
+    begin
+      @establecimiento = Establecimiento.find(params[:documento][:establecimiento_id])
+      documento = Documento.create!(params.require(:documento).permit(:establecimiento_id, :archivo))
+      flash[:notice] = 'Documento creado correctamente'
+      
+    rescue Exception => e
+      flash[:alert] = 'Error al guardar: ' << e.message
+    ensure
+      redirect_to @establecimiento
+    end    
+  end
+
+  def borrar_documento
+    documento = Documento.find(params[:id])
+    @establecimiento = documento.establecimiento
+    if documento.destroy
+      flash[:notice] = 'Eliminado correctamente'
+    else
+      flash[:alert] = 'Error al eliminar'
+    end
+    redirect_to @establecimiento
+  end
+
+
 
   # GET /establecimientos/new
   def new

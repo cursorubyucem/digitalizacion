@@ -1,8 +1,12 @@
 Rails.application.routes.draw do
   
 
-  resources :establecimientos
+  post '/establecimientos/ver_documento'
+  delete '/establecimientos/borrar_foto'
+  delete '/establecimientos/borrar_documento'
+  resources :establecimientos  
   post '/establecimientos/guardar_foto'
+  post '/establecimientos/guardar_documento'
   get 'home/index'
 
   devise_for :users

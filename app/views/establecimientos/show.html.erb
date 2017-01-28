@@ -6,6 +6,39 @@
 </p>
 
 
+<h1>Documentos</h1>
+<%= form_for @documento, url: '/establecimientos/guardar_documento', html: { multipart: true} do |f| %>
+
+  <%= f.hidden_field :establecimiento_id %>
+  <%= f.file_field :archivo%>
+  <%= f.submit %>
+
+<% end %>
+
+<table class="table">
+<thead>
+	<th>documento_file_name</th>
+	<th>documento_content_type</th>
+	<th>documento_file_size</th>
+	<th colspan="2">Acciones</th>
+</thead>
+<% @establecimiento.documentos.each do |f| %>
+<tr>
+	<td><%= f.archivo_file_name %></td>
+	<td><%= f.archivo_content_type %></td>
+	<td><%= f.archivo_file_size %></td>
+	<td>
+		<%= form_tag '/establecimientos/borrar_documento', method: :delete do %>
+		  <%= hidden_field_tag :id, f.id %>
+          <%= submit_tag 'Borrar', data: { confirm: "Estás seguro?"} %>
+		<% end %>
+	</td>
+
+</tr>
+<% end %>
+</table>
+
+
 <h1>Fotos</h1>
 <%= form_for @foto, url: '/establecimientos/guardar_foto', html: { multipart: true} do |f| %>
 
@@ -14,6 +47,33 @@
   <%= f.submit %>
 
 <% end %>
+
+<table class="table">
+<thead>
+	<th>Vista_previa</th>
+	<th>foto_file_name</th>
+	<th>foto_content_type</th>
+	<th>foto_file_size</th>
+	<th colspan="4">Acciones</th>
+</thead>
+<% @establecimiento.fotos.each do |f| %>
+<tr>
+	<td><%= image_tag f.foto.url(:thumb) %></td>
+	<td><%= f.foto_file_name %></td>
+	<td><%= f.foto_content_type %></td>
+	<td><%= f.foto_file_size %></td>
+	<td><%= link_to 'Ver thumb' , f.foto.url(:thumb), {target: '_blank'} %></td>
+	<td><%= link_to 'Ver medium' , f.foto.url(:medium), {target: '_blank'} %></td>
+	<td><%= link_to 'Ver original' , f.foto.url(:original), {target: '_blank'} %></td>
+	<td>
+		<%= form_tag '/establecimientos/borrar_foto', method: :delete do %>
+		  <%= hidden_field_tag :id, f.id %>
+          <%= submit_tag 'Borrar', data: { confirm: "Estás seguro?"} %>
+		<% end %>
+	</td>
+</tr>
+<% end %>
+</table>
 
 
 
